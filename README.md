@@ -50,3 +50,35 @@ symfony console doctrine:database:create
 symfony console make:migration
 symfony console doctrine:migrations:migrate -n
 ```
+
+#### Charger les fixtures
+
+```bash
+symfony console doctrine:fixtures:load -n 
+```
+
+### Tests
+
+#### Exécuter les tests
+
+```bash
+symfony php bin/phpunit
+```
+
+#### Création rapport de couverture du code
+
+```bash
+symfony php bin/phpunit --coverage-html public/test-coverage
+```
+
+#### Exécuter les tests PHPStan
+
+```bash
+vendor/bin/phpstan analyse
+```
+
+### Serveur web
+
+```bash
+symfony serve
+```
