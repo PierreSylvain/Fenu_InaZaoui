@@ -14,19 +14,19 @@ class Media
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "medias", fetch: "EAGER")]
-    private ?User $user = null;
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
 
-    #[ORM\ManyToOne(targetEntity: Album::class, fetch: "EAGER")]
-    private ?Album $album = null;
-
-    #[ORM\Column]
-    private string $path;
-
-    #[ORM\Column]
-    private string $title;
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
     private ?UploadedFile $file = null;
+
+    #[ORM\ManyToOne]
+    private ?Album $album = null;
+
+    #[ORM\ManyToOne(inversedBy: 'media')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
