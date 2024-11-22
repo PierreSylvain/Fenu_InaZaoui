@@ -22,7 +22,7 @@ class Media
 
     private ?UploadedFile $file = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'media')]
     private ?Album $album = null;
 
     #[ORM\ManyToOne(inversedBy: 'media')]

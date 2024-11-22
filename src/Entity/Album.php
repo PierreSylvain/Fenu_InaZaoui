@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\AlbumRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AlbumRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
 class Album
@@ -15,6 +17,16 @@ class Album
 
     #[ORM\Column(length: 255)]
     private string $name;
+
+    /**
+     * @var Collection<int, Media>
+     */
+    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'album', cascade: ['remove'])]
+    private Collection $media;
+    public function __construct()
+    {
+        $this->media = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

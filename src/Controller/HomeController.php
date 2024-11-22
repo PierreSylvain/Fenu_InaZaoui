@@ -28,19 +28,25 @@ class HomeController extends AbstractController
     #[Route('/guests', name: 'guests')]
     public function guests(Request $request): Response
     {
+        $page = $request->query->getInt('page', 1);
+
         $criteria = [];
         $criteria['admin'] = false;
         $criteria['restricted'] = false;
 
         $guests = $this->entityManager->getRepository(User::class)->findBy(
             $criteria,
-            ['id' => 'DESC'],
+            ['id' => 'ASC'],
+            25,
+            25 * ($page - 1)
         );
 
         $total = $this->entityManager->getRepository(User::class)->count($criteria);
 
         return $this->render('front/guests.html.twig', [
             'guests' => $guests,
+            'total' => $total,
+            'page' => $page
         ]);
     }
 

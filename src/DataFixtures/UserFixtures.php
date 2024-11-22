@@ -7,8 +7,9 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class UserFixtures extends Fixture implements FixtureGroupInterface
+class UserFixtures extends Fixture implements FixtureGroupInterface, OrderedFixtureInterface
 {
     public function __construct(
         private UserPasswordHasherInterface $encoder
@@ -81,7 +82,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             ->setEmail($faker->freeEmail())
             ->setDescription($faker->sentence())
             ->setRoles(['ROLE_USER'])
-            ->setPassword($this->encoder->hashPassword($user3, $user3->getUsername()))
+            ->setPassword($this->encoder->hashPassword($user5, $user5->getUsername()))
             ->setAdmin(false)
             ->setRestricted(false);
         $manager->persist($user5);
@@ -89,7 +90,11 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
         $manager->flush();
     }
-
+    public function getOrder()
+    {
+        return 1;
+    }
+    
     public static function getGroups(): array
     {
         return ['UserFixtures'];

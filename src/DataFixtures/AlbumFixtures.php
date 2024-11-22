@@ -6,8 +6,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Album;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class AlbumFixtures extends Fixture implements FixtureGroupInterface
+class AlbumFixtures extends Fixture implements FixtureGroupInterface, OrderedFixtureInterface
 {
     public const ALBUM_1 = 'album 1';
     public const ALBUM_2 = 'album 2';
@@ -37,5 +38,10 @@ class AlbumFixtures extends Fixture implements FixtureGroupInterface
     public static function getGroups(): array
     {
         return ['AlbumFixtures'];
+    }
+
+    public function getOrder()
+    {
+        return 2;
     }
 }

@@ -26,9 +26,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('about') }}">Qui suis-je ?</a>
                         </li>
-                        <li class="nav-item">
+
+                        {% if is_granted("ROLE_USER") %}
+                            <li>
+                                <a class="nav-link" href="{{ path('admin_media_index') }}">Administration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('admin_login') }}">Connexion</a>
+                            </li>
+                        {% endif %}
+
+                        {# <li class="nav-item">
                             <a class="nav-link" href="{{ path('admin_login') }}">Connexion</a>
-                        </li>
+                        </li> #}
                     </ul>
                 </div>
             </div>

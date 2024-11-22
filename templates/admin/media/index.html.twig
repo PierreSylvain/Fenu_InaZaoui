@@ -1,6 +1,11 @@
 {% extends 'admin.html.twig' %}
 
 {% block admin %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="d-flex justify-content-between align-items-center">
         <h1>Medias</h1>
         <a href="{{ path('admin_media_add') }}" class="btn btn-primary">Ajouter</a>
@@ -23,7 +28,7 @@
                     <td><img src="{{ asset(media.path) }}" width="75" /></td>
                     <td>{{ media.title }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <td>{{ media.user.name }}</td>
+                        <td>{{ media.user.username }}</td>
                         <td>{{ media.album.name ?? '' }}</td>
                     {% endif %}
                     <td>

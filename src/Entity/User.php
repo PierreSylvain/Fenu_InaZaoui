@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const ROLE_USER_RESTRICTED = 'ROLE_USER_RESTRICTED';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -207,6 +209,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->restricted = $restricted;
 
-        return $this;
+    if ($restricted) {
+        // Vérifiez si le rôle n'est pas déjà présent avant de l'ajouter
+        if (!in_array(self::ROLE_USER_RESTRICTED, $this->roles)) {
+            $this->roles[] = self::ROLE_USER_RESTRICTED;
+        }
+    } else {
+        // Supprimez le rôle s'il existe
+        $key = array_search(self::ROLE_USER_RESTRICTED, $this->roles);
+        if ($key !== false) {
+            unset($this->roles[$key]);
+        }
+    }
+    return $this;
     }
 }
