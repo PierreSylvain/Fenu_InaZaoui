@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
         //     return $this->redirectToRoute('home');
         // }
 
-        dd($user);
+        // dd($user);
         if ($user instanceof User && $user->isRestricted() === true) {
         // if ($user instanceof User && !in_array('ROLE_USER_RESTRICTED', $user->getRoles())) {
         // if ($authorizationChecker->isGranted('ROLE_USER_RESTRICTED') && !$this->getUser()) {

@@ -7,9 +7,8 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class UserFixtures extends Fixture implements FixtureGroupInterface, OrderedFixtureInterface
+class UserFixtures extends Fixture implements FixtureGroupInterface
 {
     public function __construct(
         private UserPasswordHasherInterface $encoder
@@ -90,11 +89,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface, OrderedFixt
 
         $manager->flush();
     }
-    public function getOrder()
-    {
-        return 1;
-    }
-    
+
     public static function getGroups(): array
     {
         return ['UserFixtures'];

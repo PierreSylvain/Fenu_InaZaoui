@@ -9,9 +9,8 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use App\DataFixtures\UserFixtures;
 use App\DataFixtures\AlbumFixtures;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class MediaFixtures extends Fixture implements FixtureGroupInterface, OrderedFixtureInterface
+class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
     public const MEDIA_1 = 'media 1';
     public const MEDIA_2 = 'media 2';
@@ -26,7 +25,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, OrderedFix
     {        
         // Création des médias
         $media1 = new Media();
-        $media1->setUser($this->getReference(UserFixtures::USER_1))
+        $media1
+            ->setUser($this->getReference(UserFixtures::USER_1))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_1))
             ->setPath('uploads/paysage1.jpg')
             ->setTitle('Quai coloré');
@@ -110,10 +110,5 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, OrderedFix
     public static function getGroups(): array
     {
         return ['MediaFixtures'];
-    }
-
-    public function getOrder()
-    {
-        return 3;
     }
 }
