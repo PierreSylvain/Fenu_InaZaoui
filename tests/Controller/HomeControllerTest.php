@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller;
 
 use App\Entity\Album;
 use App\Entity\Media;
