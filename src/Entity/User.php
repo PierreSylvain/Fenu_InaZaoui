@@ -209,18 +209,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->restricted = $restricted;
 
-    // if ($restricted) {
-    //     // Vérifiez si le rôle n'est pas déjà présent avant de l'ajouter
-    //     if (!in_array(self::ROLE_USER_RESTRICTED, $this->roles)) {
-    //         $this->roles[] = self::ROLE_USER_RESTRICTED;
-    //     }
-    // } else {
-    //     // Supprimez le rôle s'il existe
-    //     $key = array_search(self::ROLE_USER_RESTRICTED, $this->roles);
-    //     if ($key !== false) {
-    //         unset($this->roles[$key]);
-    //     }
-    // }
         return $this;
     }
 }
