@@ -34,21 +34,6 @@ class MediaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param Album $album
-     * @return Media[] Returns an array of Media objects
-     */
-    public function findAllMediasNotRestrictedByAlbum(Album $album): array
-    {
-        return $this->createQueryBuilder('media')
-            ->join('media.user', 'user')
-            ->where('user.restricted = false')
-            ->andWhere('media.album = :album')
-            ->setParameter('album', $album)
-            ->getQuery()
-            ->getResult();
-    }
-
 //    /**
 //     * @return Media[] Returns an array of Media objects
 //     */

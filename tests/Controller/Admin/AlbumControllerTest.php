@@ -65,4 +65,57 @@ class AlbumControllerTest extends WebTestCase
 
         self::assertNotNull($album);
     }
+
+    public function testEditAlbum(): void
+    {
+        $admin = $this->entityManager->getRepository(User::class)->findOneBy([
+            'admin' => true,
+        ]);
+        self::assertNotNull($admin);
+
+        $this->client->loginUser($admin);
+
+        $album = $this->entityManager->getRepository(Album::class)->findOneBy([
+            'name' => 'Montagne',
+        ]);
+
+        $crawler = $this->client->request('GET', '/admin/album/update/' . $album->getId());
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Modifier')->form([
+            'album[name]' => 'Montagnes',
+        ]);
+
+        $this->client->submit($form);
+        self::assertResponseRedirects('/admin/album');
+
+        $updateAlbum = $this->entityManager->getRepository(Album::class)->findOneBy([
+            'name' => 'Montagnes',
+        ]);
+
+        self::assertNotNull($updateAlbum);
+        self::assertSame('Montagnes', $updateAlbum->getName());
+    }
+
+    public function testDeleteAlbum(): void
+    {
+        $admin = $this->entityManager->getRepository(User::class)->findOneBy([
+            'admin' => true,
+        ]);
+        self::assertNotNull($admin);
+
+        $this->client->loginUser($admin);
+
+        $album = new Album();
+        $album->setName('created to delete');
+        $this->entityManager->persist($album);
+        $this->entityManager->flush();
+
+        $albumId = $album->getId();
+        $this->client->request('GET', '/admin/album/delete/' . $albumId);
+        self::assertResponseRedirects('/admin/album');
+
+        self::assertNull($this->entityManager->getRepository(Album::class)->find($albumId));
+    }
+
 }

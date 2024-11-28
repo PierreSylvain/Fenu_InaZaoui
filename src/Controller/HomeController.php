@@ -75,11 +75,7 @@ class HomeController extends AbstractController
             $album = $this->entityManager->getRepository(Album::class)->find($id);
         }
 
-        if ($album != null) {
-            $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestrictedByAlbum($album);
-        } else {
-            $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestricted();
-        }
+        $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestricted();
 
         return $this->render('front/portfolio.html.twig', [
             'albums' => $albums,

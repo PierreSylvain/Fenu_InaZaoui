@@ -2,12 +2,13 @@
 
 namespace App\Tests\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\Album;
 use App\Entity\Media;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaControllerTest extends WebTestCase
 {
@@ -71,10 +72,9 @@ class MediaControllerTest extends WebTestCase
             $title = $media->getTitle();
             self::assertNotNull($title);
         }
-
     }
 
-    public function testAddAlbum(): void
+    public function testAddMedia(): void
     {
         $admin = $this->entityManager->getRepository(User::class)->findOneBy([
             'admin' => true,
@@ -89,24 +89,48 @@ class MediaControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/admin/media/add');
         self::assertResponseIsSuccessful();
 
+        $imagePath = self::getContainer()->getParameter('kernel.project_dir') . '/public/uploads/imagesTest/test1.jpg';
+        $file = new UploadedFile($imagePath, 'test1', 'image/jpeg');
+
         $form = $crawler->selectButton('Ajouter')->form([
             'media[user]' => $admin->getId(),
             'media[album]' => $album->getId(),
             'media[title]' => 'testAddMedia',
-            // 'media[file]' => 
+            'media[file]' => $file,
         ]);
 
         $this->client->submit($form);
         self::assertResponseRedirects('/admin/media');
-
-        $this->client->followRedirect();
 
         $media = $this->entityManager->getRepository(Media::class)->findOneBy([
             'title' => 'testAddMedia',
         ]);
 
         self::assertNotNull($media);
+        self::assertSame('testAddMedia', $media->getTitle());
         self::assertNotNull($media->getPath());
+    }
+    
+    public function testDeleteMedia(): void
+    {
+        $admin = $this->entityManager->getRepository(User::class)->findOneBy([
+            'admin' => true,
+        ]);
+        self::assertNotNull($admin);
 
+        $this->client->loginUser($admin);
+
+        $album = $this->entityManager->getRepository(Album::class)->findOneBy([]);
+        self::assertNotNull($album);
+
+        $media = $this->entityManager->getRepository(Media::class)->findOneBy([
+            'title' => 'testAddMedia',
+        ]);
+
+        $mediaId = $media->getId();
+        $this->client->request('GET', '/admin/media/delete/' . $mediaId);
+        self::assertResponseRedirects('/admin/media');
+
+        self::assertNull($this->entityManager->getRepository(Media::class)->find($mediaId));
     }
 }
