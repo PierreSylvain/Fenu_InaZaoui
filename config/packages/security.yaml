@@ -20,6 +20,8 @@ security:
                 check_path: admin_login
             logout:
                 path: app_logout
+            pattern: ^/
+            user_checker: App\Security\UserChecker
     access_control:
         # - { path: ^/admin, roles: ROLE_USER }
         # - { path: ^/login$, roles: ["!ROLE_USER_RESTRICTED"]}

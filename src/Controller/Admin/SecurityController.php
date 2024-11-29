@@ -13,8 +13,6 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'admin_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $user = $this->getUser();
-
         // if ($user === null) {
         //     $this->addFlash('error', 'Utilisateur non trouvé.');
         //     return $this->redirectToRoute('home');
@@ -25,10 +23,10 @@ class SecurityController extends AbstractController
         // dernier nom d'utilisateur saisi
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        if ($user instanceof User && $user->isRestricted()) {
-            $this->addFlash('error', 'Accès refusé.');
-            return $this->redirectToRoute('home');
-        }   
+        // if ($user instanceof User && $user->isRestricted()) {
+        //     $this->addFlash('error', 'Accès refusé.');
+        //     return $this->redirectToRoute('home');
+        // }   
         
         return $this->render('admin/login.html.twig', [
             'last_username' => $lastUsername,
