@@ -71,11 +71,15 @@ class HomeController extends AbstractController
         $albums = $this->entityManager->getRepository(Album::class)->findAll();
         $album = null;
 
-        if ($id != null) {
+        if ($id !== null) {
             $album = $this->entityManager->getRepository(Album::class)->find($id);
         }
 
-        $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestricted();
+        if ($album !== null) {
+            $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestrictedByAlbum($album);
+        } else {
+            $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestricted();
+        }
 
         return $this->render('front/portfolio.html.twig', [
             'albums' => $albums,
@@ -85,7 +89,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/about', name: 'about')]
-    public function about()
+    public function about(): Response
     {
         return $this->render('front/about.html.twig');
     }

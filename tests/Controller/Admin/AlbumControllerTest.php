@@ -34,7 +34,7 @@ class AlbumControllerTest extends WebTestCase
         $albums = $this->entityManager->getRepository(Album::class)->findAll();
         foreach ($albums as $album) {
             $albumName = $album->getName();
-            self::assertNotNull($albumName);
+            self::assertNotEmpty($albumName);
         }
     }
 

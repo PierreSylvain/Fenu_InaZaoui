@@ -9,11 +9,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Media>
- *
- * @method Media|null find($id, $lockMode = null, $lockVersion = null)
- * @method Media|null findOneBy(array $criteria, array $orderBy = null)
- * @method Media[]    findAll()
- * @method Media[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class MediaRepository extends ServiceEntityRepository
 {
@@ -30,6 +25,21 @@ class MediaRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('media')
             ->join('media.user', 'user')
             ->where('user.restricted = false')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param Album $album
+     * @return Media[] Returns an array of Media objects
+     */
+    public function findAllMediasNotRestrictedByAlbum(Album $album): array
+    {
+        return $this->createQueryBuilder('media')
+            ->join('media.user', 'user')
+            ->where('user.restricted = false')
+            ->andWhere('media.album = :album')
+            ->setParameter('album', $album)
             ->getQuery()
             ->getResult();
     }

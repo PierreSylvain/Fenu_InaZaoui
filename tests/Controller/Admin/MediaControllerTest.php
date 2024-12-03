@@ -36,7 +36,7 @@ class MediaControllerTest extends WebTestCase
         $medias = $this->entityManager->getRepository(Media::class)->findAll();
         foreach ($medias as $media) {
             $title = $media->getTitle();
-            self::assertNotNull($title);
+            self::assertNotEmpty($title);
         }
     }
 
@@ -62,7 +62,7 @@ class MediaControllerTest extends WebTestCase
         ]);
         foreach ($ownedMedias as $media) {
             $title = $media->getTitle();
-            self::assertNotNull($title);
+            self::assertNotEmpty($title);
         }
 
         $adminMedias = $this->entityManager->getRepository(Media::class)->findBy([
@@ -70,7 +70,7 @@ class MediaControllerTest extends WebTestCase
         ]);
         foreach ($adminMedias as $media) {
             $title = $media->getTitle();
-            self::assertNotNull($title);
+            self::assertNotEmpty($title);
         }
     }
 
@@ -108,7 +108,7 @@ class MediaControllerTest extends WebTestCase
 
         self::assertNotNull($media);
         self::assertSame('testAddMedia', $media->getTitle());
-        self::assertNotNull($media->getPath());
+        self::assertNotEmpty($media->getPath());
     }
     
     public function testDeleteMedia(): void

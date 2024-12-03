@@ -3,6 +3,8 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use App\Entity\Album;
+use App\Entity\Media;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use App\DataFixtures\AppFixtures;
 use App\DataFixtures\AlbumFixtures;
@@ -50,6 +52,35 @@ class HomeControllerTest extends WebTestCase
         $this->client->request('GET', '/portfolio');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h3', 'Portfolio');
+
+        $albums = $this->entityManager->getRepository(Album::class)->findAll();
+
+        foreach ($albums as $album) {
+            self::assertSelectorExists('a[href="/portfolio/' . $album->getId() . '"]');
+        }
+
+        $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestricted();
+
+        foreach ($medias as $media) {
+            self::assertSelectorExists('img[src="/' . $media->getPath() . '"]');
+        }
+    }
+
+    public function testPortfolioPageWithId(): void
+    {
+        $albums = $this->entityManager->getRepository(Album::class)->findAll();
+
+        foreach ($albums as $album) {
+            $medias = $this->entityManager->getRepository(Media::class)->findAllMediasNotRestrictedByAlbum($album);
+
+            $this->client->request('GET', '/portfolio/' . $album->getId());
+
+            self::assertResponseIsSuccessful();
+
+            foreach ($medias as $media) {
+                self::assertSelectorExists('img[src="/' . $media->getPath() . '"]');
+            }
+        }
     }
 
     public function testGuestsPage(): void

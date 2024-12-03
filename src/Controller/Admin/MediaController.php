@@ -62,18 +62,39 @@ class MediaController extends AbstractController
                     $media->setUser($user);
                 }
             }
-
-            $media->setPath('uploads/' . md5(uniqid('', true)) . '.' . $media->getFile()->guessExtension());
-            $media->getFile()->move('uploads/', $media->getPath());
-
-            $this->entityManager->persist($media);
+            
+            $albumName = $media->getAlbum()->getName();
+            $index = $this->entityManager->getRepository(Media::class)->countByAlbum($albumName);
+            $mediaIndex = $index + 1;
+            $filename = "{$albumName}_{$mediaIndex}.{$media->getFile()->guessExtension()}";
+            $path = "uploads/{$filename}";
+        
+            while (file_exists($path)) {
+                $mediaIndex++;
+                $filename = "{$albumName}_{$mediaIndex}.{$media->getFile()->guessExtension()}";
+                $path = "uploads/{$filename}";
+            }
+        
+            $media->setPath($path);
+            $media->getFile()->move('uploads/', $filename);            $this->entityManager->persist($media);
             $this->entityManager->flush();
             $this->addFlash('success', 'Média bien ajouté');
             
             return $this->redirectToRoute('admin_media_index');
         }
 
-        return $this->render('admin/media/add.html.twig', ['form' => $form->createView()]);
+        // Gérer les erreurs du formulaire
+        $formErrors = [];
+        foreach ($form->getErrors(true) as $error) {
+            $field = $error->getOrigin()->getName();
+            $message = $error->getMessage();
+            $formErrors[$field] = $message;
+        }
+
+        return $this->render('admin/media/add.html.twig', [
+            'form' => $form->createView(),
+            'formErrors' => $formErrors // Passer les erreurs du formulaire au template
+        ]);
     }
 
     #[Route('/admin/media/delete/{id}', name: 'admin_media_delete')]    

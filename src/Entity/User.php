@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $username = null;
 
     /**
@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string|null The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'user', cascade: ['remove'])]
     private Collection $media;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $restricted = null;
 
     public function __construct()
