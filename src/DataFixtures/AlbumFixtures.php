@@ -17,12 +17,12 @@ class AlbumFixtures extends Fixture implements FixtureGroupInterface
     {        
         // Création des albums
         $album1 = new Album();
-        $album1->setName('Paysages');
+        $album1->setName('Paysage');
         $manager->persist($album1);
         $this->addReference(self::ALBUM_1, $album1);
 
         $album2 = new Album();
-        $album2->setName('Villes');
+        $album2->setName('Ville');
         $manager->persist($album2);
         $this->addReference(self::ALBUM_2, $album2);
 

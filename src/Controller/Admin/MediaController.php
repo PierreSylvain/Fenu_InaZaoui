@@ -74,9 +74,10 @@ class MediaController extends AbstractController
                 $filename = "{$albumName}_{$mediaIndex}.{$media->getFile()->guessExtension()}";
                 $path = "uploads/{$filename}";
             }
-        
+
             $media->setPath($path);
-            $media->getFile()->move('uploads/', $filename);            $this->entityManager->persist($media);
+            $media->getFile()->move('uploads/', $filename);
+            $this->entityManager->persist($media);
             $this->entityManager->flush();
             $this->addFlash('success', 'Média bien ajouté');
             

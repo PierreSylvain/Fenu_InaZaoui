@@ -28,8 +28,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media1
             ->setUser($this->getReference(UserFixtures::USER_1))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_1))
-            ->setPath('uploads/paysage1.jpg')
-            ->setTitle('Quai coloré');
+            ->setPath('uploads/Paysage_1.webp')
+            ->setTitle('Paysage miroir');
         $manager->persist($media1);
         $this->addReference(self::MEDIA_1, $media1);
 
@@ -38,8 +38,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media2
             ->setUser($this->getReference(UserFixtures::USER_5))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_1))
-            ->setPath('uploads/paysage2.jpg')
-            ->setTitle('Pont sur la rivière');
+            ->setPath('uploads/Paysage_2.webp')
+            ->setTitle('Quai face montagne');
         $manager->persist($media2);
         $this->addReference(self::MEDIA_2, $media2);
 
@@ -47,8 +47,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media3
             ->setUser($this->getReference(UserFixtures::USER_2))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_1))
-            ->setPath('uploads/paysage3.jpg')
-            ->setTitle('Escalier nature');
+            ->setPath('uploads/Paysage_3.webp')
+            ->setTitle('Colline verte');
         $manager->persist($media3);
         $this->addReference(self::MEDIA_3, $media3);
 
@@ -56,8 +56,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media4
             ->setUser($this->getReference(UserFixtures::USER_5))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_3))
-            ->setPath('uploads/montagne1.jpg')
-            ->setTitle('Montagne estivale');
+            ->setPath('uploads/Montagne_1.webp')
+            ->setTitle('Pic vers le ciel');
         $manager->persist($media4);
         $this->addReference(self::MEDIA_4, $media4);
 
@@ -65,8 +65,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media5
             ->setUser($this->getReference(UserFixtures::USER_2))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_3))
-            ->setPath('uploads/montagne2.jpg')
-            ->setTitle('Chalet');
+            ->setPath('uploads/Montagne_2.webp')
+            ->setTitle('Chalet montagnard');
         $manager->persist($media5);
         $this->addReference(self::MEDIA_5, $media5);
 
@@ -74,8 +74,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media6
             ->setUser($this->getReference(UserFixtures::USER_3))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_3))
-            ->setPath('uploads/montagne3.jpg')
-            ->setTitle('Montagne embrumée');
+            ->setPath('uploads/Ville_1.webp')
+            ->setTitle('Purple city');
         $manager->persist($media5);
         $this->addReference(self::MEDIA_6, $media6);
 
@@ -83,8 +83,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media7
             ->setUser($this->getReference(UserFixtures::USER_2))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_2))
-            ->setPath('uploads/ville1.jpg')
-            ->setTitle('Purple city');
+            ->setPath('uploads/Ville_2.webp')
+            ->setTitle('Pise');
         $manager->persist($media7);
         $this->addReference(self::MEDIA_7, $media7);
 
@@ -92,8 +92,8 @@ class MediaFixtures extends Fixture implements FixtureGroupInterface, DependentF
         $media8
             ->setUser($this->getReference(UserFixtures::USER_2))
             ->setAlbum($this->getReference(AlbumFixtures::ALBUM_2))
-            ->setPath('uploads/ville2.jpg')
-            ->setTitle('Ville ensoleillé');
+            ->setPath('uploads/Ville_3.webp')
+            ->setTitle('Paris');
         $manager->persist($media8);
         $this->addReference(self::MEDIA_8, $media8);
 
