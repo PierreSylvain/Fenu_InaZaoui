@@ -12,7 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-
+/**
+ * @template TData of Media
+ * @extends AbstractType<TData>
+ */
 class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -43,7 +46,7 @@ class MediaType extends AbstractType
             ])
         ;
 
-        if ($options['is_admin']) {
+        if ($options['is_admin'] === true) {
             $builder
                 ->add('user', EntityType::class, [
                     'label' => 'Utilisateur',

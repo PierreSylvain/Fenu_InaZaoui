@@ -1,14 +1,11 @@
 version: '3'
 services:
-  postgres:
-    image: postgres:16-alpine
+  mysql:
+    image: mysql:8.0
     ports:
-      - 5432:5432
-    volumes:
-      - postgres_db:/var/lib/postgresql/data
+      - 3306:3306
     environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-volumes:
-  postgres_db:
-    driver: local
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=Ina
+      - MYSQL_DATABASE=oc
+      - MYSQL_ROOT_PASSWORD=password

@@ -9,7 +9,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData=Album
+ * @template TData of Album
+ * @extends AbstractType<TData>
  */
 class AlbumType extends AbstractType
 {
