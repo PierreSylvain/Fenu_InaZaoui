@@ -9,3 +9,8 @@ services:
       - MYSQL_USER=Ina
       - MYSQL_DATABASE=oc
       - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
