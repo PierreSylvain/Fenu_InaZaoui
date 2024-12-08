@@ -16,7 +16,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: test_db
         options: >-
           --health-cmd="mysqladmin ping --silent"
@@ -44,10 +44,16 @@ jobs:
       run: |
         cp .env.test .env
 
+    - name: Validate database schema
+      run: php bin/console doctrine:schema:validate --skip-sync
+
     - name: Run migrations
       run: |
         php bin/console doctrine:database:create --if-not-exists
         php bin/console doctrine:migrations:migrate --no-interaction
+
+    - name: Load fixtures
+      run: php bin/console doctrine:fixtures:load --no-interaction
 
     - name: Run tests
       run: php bin/phpunit
